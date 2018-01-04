@@ -14,8 +14,7 @@ const HomeScreen = ({ navigation }) => (
 );
 
 const BlogScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Blog</Text>
+  <View style={{ flex: 1, alignItems: 'flex-start' }}>
     <Blog />
   </View>
 );
