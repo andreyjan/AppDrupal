@@ -12,6 +12,16 @@ export class Api {
       .catch(e => e);
   }
 
+  getBlogItem(nid) {
+    return fetch(Api.getBaseUrl() + 'node/' + nid + '?_format=json')
+    // .then(Api.checkStatus(response))
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return responseJson;
+      })
+      .catch(e => e);
+  }
+
   static getBaseUrl() {
     return 'http://dev-app-drupal.pantheonsite.io/';
   }

@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-// import HTMLView from 'react-native-htmlview';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { Api } from '../api/Api.js';
+import {BlogItem} from "./BlogItem";
 
 const styles = StyleSheet.create({
   blogView: {
     flex: 1,
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
   },
   blogItem: {
     marginTop: 10,
     paddingLeft: 10,
+    paddingRight: 10,
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
     paddingBottom: 10,
@@ -23,6 +24,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
   },
+  button: {
+    width: 150,
+  }
 });
 
 const striptags = require('striptags');
@@ -46,21 +50,27 @@ export class Blog extends React.Component {
   }
 
   render() {
+
     return (
       <View style={styles.blogView}>
         {this.state.blog.map(function(node) {
+          const {navigate} = this.props.navigation;
           let body = striptags(node.body);
           return (
             <View key={node.nid} style={styles.blogItem}>
               <Text style={styles.blogItemTitle}>{node.title}</Text>
               <Text numberOfLines={3} style={styles.blogItemBody}>{body}</Text>
-              {/*<HTMLView*/}
-                {/*value={node.body}*/}
-                {/*style={styles.blogItemBody}*/}
-                {/*textComponentProps={{style: styles.blogItemBodyText}} />*/}
+              <View style={styles.button}>
+                <Button
+                  title="Read More"
+                  onPress={() =>
+                    navigate('BlogItem', { name: node.title, nid: node.nid })
+                  }
+                />
+              </View>
             </View>
           );
-        })}
+        }.bind(this))}
       </View>
     );
   }

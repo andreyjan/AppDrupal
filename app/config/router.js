@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Blog } from '../components/Blog';
+import { BlogItem } from "../components/BlogItem";
 
 const HomeScreen = ({ navigation }) => (
   <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -13,12 +14,6 @@ const HomeScreen = ({ navigation }) => (
   </View>
 );
 
-const BlogScreen = () => (
-  <View style={{ flex: 1, alignItems: 'flex-start' }}>
-    <Blog />
-  </View>
-);
-
 export const RootNavigator = StackNavigator({
     Home: {
         screen: HomeScreen,
@@ -27,9 +22,15 @@ export const RootNavigator = StackNavigator({
         },
     },
     Blog: {
-        screen: BlogScreen,
+        screen: Blog,
         navigationOptions: {
             headerTitle: 'Blog',
         },
+    },
+    BlogItem: {
+        screen: BlogItem,
+        navigationOptions: ({ navigation }) => ({
+          title: navigation.state.params.name,
+      }),
     },
 });
