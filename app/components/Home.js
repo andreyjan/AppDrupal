@@ -67,7 +67,6 @@ export class Home extends React.Component {
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home</Text>
         <View style={styles.button}>
           <Button
             style={styles.button}

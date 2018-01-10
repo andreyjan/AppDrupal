@@ -53,6 +53,18 @@ export class Api {
       .catch(e => e);
   }
 
+  submitContent(node, token) {
+    return fetch(Api.getBaseUrl() + 'entity/node?_format=json', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: node
+    }).catch(e => e);
+  }
+
   static getBaseUrl() {
     return 'http://dev-app-drupal.pantheonsite.io/';
   }
