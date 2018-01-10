@@ -22,6 +22,37 @@ export class Api {
       .catch(e => e);
   }
 
+  authenticateUser(userName, password) {
+    return fetch(Api.getBaseUrl() + 'user/login?_format=json', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: userName,
+        pass: password,
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        return responseJson;
+      })
+      .catch(e => e);
+  }
+
+  getSessionToken() {
+    return fetch(Api.getBaseUrl() + 'session/token')
+      .then((response) => response.text())
+      .then((text) => {return text;})
+      .catch(e => e);
+  }
+
+  static userLogout(token) {
+    return fetch(Api.getBaseUrl() + 'user/logout?csrf_token=' + token)
+      .catch(e => e);
+  }
+
   static getBaseUrl() {
     return 'http://dev-app-drupal.pantheonsite.io/';
   }

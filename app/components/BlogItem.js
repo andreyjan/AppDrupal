@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { Api } from '../api/Api.js';
 
@@ -17,7 +17,8 @@ export class BlogItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      blogItem: []
+      blogItem: [],
+      isLoaded: false
     };
     this.nid = this.props.navigation.state.params.nid;
   }
@@ -26,12 +27,19 @@ export class BlogItem extends React.Component {
     const api = new Api();
     api.getBlogItem(this.nid).then(function(response) {
       this.setState({
-        blogItem: response
+        blogItem: response,
+        isLoaded: true
       })
     }.bind(this));
   }
 
   render() {
+    if (this.state.isLoaded === false) {
+      return (
+        <ActivityIndicator size="large" color="#0000ff" />
+      )
+    }
+
     let body = '';
     if (this.state.blogItem.hasOwnProperty('body')
       && this.state.blogItem.body.length) {

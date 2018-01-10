@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { ActivityIndicator, View, Text, Button, StyleSheet } from 'react-native';
 import { Api } from '../api/Api.js';
 import {BlogItem} from "./BlogItem";
 
@@ -36,7 +36,8 @@ export class Blog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      blog: []
+      blog: [],
+      isLoaded: false
     };
   }
 
@@ -44,12 +45,18 @@ export class Blog extends React.Component {
     const api = new Api();
     api.getBlog().then(function(response) {
       this.setState({
-        blog: response
+        blog: response,
+        isLoaded: true
       })
     }.bind(this));
   }
 
   render() {
+    if (this.state.isLoaded === false) {
+      return (
+        <ActivityIndicator size="large" color="#0000ff" />
+      )
+    }
 
     return (
       <View style={styles.blogView}>

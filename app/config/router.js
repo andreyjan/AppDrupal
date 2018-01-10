@@ -1,22 +1,14 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Blog } from '../components/Blog';
-import { BlogItem } from "../components/BlogItem";
-
-const HomeScreen = ({ navigation }) => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Home</Text>
-    <Button
-      onPress={() => navigation.navigate('Blog')}
-      title="Blog"
-    />
-  </View>
-);
+import { BlogItem } from '../components/BlogItem';
+import { Login } from '../components/Login';
+import { AddContent } from '../components/AddContent';
+import { Home } from '../components/Home';
 
 export const RootNavigator = StackNavigator({
     Home: {
-        screen: HomeScreen,
+        screen: Home,
         navigationOptions: {
             headerTitle: 'Home',
         },
@@ -33,4 +25,16 @@ export const RootNavigator = StackNavigator({
           title: navigation.state.params.name,
       }),
     },
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            title: 'Login',
+        },
+    },
+    AddContent: {
+        screen: AddContent,
+        navigationOptions: {
+            title: 'Add Content',
+        },
+    }
 });
