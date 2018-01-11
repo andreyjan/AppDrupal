@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, AsyncStorage, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, Button, AsyncStorage, ActivityIndicator, NetInfo } from 'react-native';
 import { Authentication } from "../Utils/Authentication";
 
 const styles = StyleSheet.create({
@@ -14,14 +14,30 @@ export class Home extends React.Component {
 
   constructor() {
     super();
-    this.state = { hasToken: false, isLoaded: false };
+    this.state = { isConnected: false, hasToken: false, isLoaded: false };
   }
 
   componentDidMount() {
+    NetInfo.isConnected.fetch().then(isConnected => {
+      this.setState({isConnected: isConnected});
+    });
+    NetInfo.isConnected.addEventListener(
+      'connectionChange',
+      this.handleConnectionChange.bind(this)
+    );
+
     AsyncStorage.getItem('id_token').then((token) => {
       this.setState({ hasToken: token !== null, isLoaded: true })
     });
   }
+
+  handleConnectionChange(isConnected) {
+    this.setState({ isConnected: isConnected });
+    NetInfo.isConnected.removeEventListener(
+      'connectionChange',
+      this.handleConnectionChange.bind(this)
+    );
+  };
 
   render() {
     const {navigate} = this.props.navigation;
@@ -29,9 +45,17 @@ export class Home extends React.Component {
 
     let actions = '';
     if (this.state.isLoaded === false) {
-        actions = <ActivityIndicator />;
+      actions = <ActivityIndicator />;
     }
     else {
+      if (this.state.isConnected === false) {
+        return (
+          <View>
+            <Text>Please enable Internet connection!</Text>
+            <ActivityIndicator />
+          </View>
+        );
+      }
       if (this.state.hasToken === true) {
         actions = (
           <View>

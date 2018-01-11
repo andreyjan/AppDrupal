@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { Api } from '../api/Api.js';
 
 const styles = StyleSheet.create({
   blogItem: {
-    flex: 1,
     marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
@@ -46,11 +45,11 @@ export class BlogItem extends React.Component {
       body = this.state.blogItem.body[0].value;
     }
     return (
-      <View style={styles.blogItem}>
+      <ScrollView contentContainerStyle={styles.blogItem}>
         <HTMLView
           value={body}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

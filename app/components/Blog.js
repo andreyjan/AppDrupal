@@ -1,11 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, Button, StyleSheet } from 'react-native';
+import { ActivityIndicator, ScrollView, View, Text, Button, StyleSheet } from 'react-native';
 import { Api } from '../api/Api.js';
 import {BlogItem} from "./BlogItem";
 
 const styles = StyleSheet.create({
   blogView: {
-    flex: 1,
     alignItems: 'stretch',
   },
   blogItem: {
@@ -59,7 +58,7 @@ export class Blog extends React.Component {
     }
 
     return (
-      <View style={styles.blogView}>
+      <ScrollView contentContainerStyle={styles.blogView}>
         {this.state.blog.map(function(node) {
           const {navigate} = this.props.navigation;
           let body = striptags(node.body);
@@ -78,7 +77,7 @@ export class Blog extends React.Component {
             </View>
           );
         }.bind(this))}
-      </View>
+      </ScrollView>
     );
   }
 }
